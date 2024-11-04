@@ -1,0 +1,21 @@
+id: bug.libremidi.bugremidi
+runtime: org.freedesktop.Platform
+runtime-version: '24.08'
+sdk: org.freedesktop.Sdk
+command: bugremidi
+finish-args:
+  - --socket=pulseaudio
+modules:
+  - name: libremidi
+    buildsystem: cmake-ninja
+    config-opts:
+      - "-DLIBREMIDI_NO_PIPEWIRE=TRUE" # otherwise it will try to FetchContent
+    sources:
+      - type: archive
+        url: https://github.com/celtera/libremidi/archive/refs/tags/v4.5.0.zip
+        sha256: bd812e1d194125121f74388c2294e5f2d4c1b7e40ff13de9aaf2f34c18cc8d1a
+  - name: bugremidi
+    buildsystem: cmake-ninja
+    sources:
+      - type: dir
+        path: "src"
